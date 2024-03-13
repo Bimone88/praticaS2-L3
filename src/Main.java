@@ -1,23 +1,40 @@
-
-import entitites.Product;
-import entitites.Order;
-import entitites.Customer;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import entitites.Product;
-import entitites.Order;
-import entitites.Customer;
-
-import java.time.LocalDate;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        // Creare qui le liste di esempio dei prodotti e ordini
+        Scanner scanner = new Scanner(System.in);
+
         List<Product> productList = new ArrayList<>();
+        // Leggere l'input dell'utente e aggiungere i prodotti alla productList
+        System.out.println("Inserire il numero di prodotti:");
+        int numberOfProducts = scanner.nextInt();
+        scanner.nextLine(); 
+
+        for (int i = 0; i < numberOfProducts; i++) {
+            System.out.println("Inserire l'ID del prodotto:");
+            Long id = scanner.nextLong();
+            scanner.nextLine();
+
+            System.out.println("Inserire il nome del prodotto:");
+            String name = scanner.nextLine();
+
+            System.out.println("Inserire la categoria del prodotto:");
+            String category = scanner.nextLine();
+
+            System.out.println("Inserire il prezzo del prodotto:");
+            Double price = scanner.nextDouble();
+            scanner.nextLine();
+
+            productList.add(new Product(id, name, category, price));
+        }
+
+        scanner.close();
+
+        // Creare qui le liste di esempio dei prodotti e ordini
         List<Order> orderList = new ArrayList<>();
         List<Customer> customerList = new ArrayList<>();
 
@@ -64,5 +81,98 @@ public class Main {
         productsOrderedByTier2Customers.forEach(System.out::println);
     }
 }
+
+class Product {
+    private Long id;
+    private String name;
+    private String category;
+    private Double price;
+
+    public Product(Long id, String name, String category, Double price) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                '}';
+    }
+}
+
+class Order {
+    private LocalDate orderDate;
+    private List<Product> products;
+    private Customer customer;
+
+    public Order(LocalDate orderDate, List<Product> products, Customer customer) {
+        this.orderDate = orderDate;
+        this.products = products;
+        this.customer = customer;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderDate=" + orderDate +
+                ", products=" + products +
+                ", customer=" + customer +
+                '}';
+    }
+}
+
+class Customer {
+    private int tier;
+
+    public Customer(int tier) {
+        this.tier = tier;
+    }
+
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "tier=" + tier +
+                '}';
+    }
+}
+
 
 
